@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GO TO WORK Control UI</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Windows-first local agent automation</p>
+          <h1>GO TO WORK</h1>
+          <p class="hero-copy">
+            Explicit approvals, browser-first control, desktop fallback only when needed, and
+            audit-friendly safety rails throughout every session.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="stopButton" class="danger">Emergency Stop</button>
+          <label class="toggle">
+            <span>Auto-Approve</span>
+            <select id="autoApproveSelect">
+              <option value="0">Off</option>
+              <option value="15">15m</option>
+              <option value="30">30m</option>
+              <option value="60">1hr</option>
+            </select>
+          </label>
+          <label class="toggle">
+            <span>Dry Run</span>
+            <input id="dryRunToggle" type="checkbox" />
+          </label>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel status-panel">
+          <h2>Status</h2>
+          <div id="statusBadge" class="status-badge idle">Idle</div>
+          <p id="statusCopy" class="muted">No active control lease.</p>
+          <p class="muted">Emergency stop hotkey: <code>Ctrl+Alt+F12</code></p>
+        </article>
+
+        <article class="panel">
+          <h2>Allowlists</h2>
+          <div class="list-block">
+            <h3>Browser Domains</h3>
+            <ul id="domainList"></ul>
+          </div>
+          <div class="list-block">
+            <h3>Desktop Apps</h3>
+            <ul id="processList"></ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Pending Approvals</h2>
+          <p class="muted">Approvals appear here when an MCP client or HTTP caller requests control.</p>
+        </div>
+        <div id="approvalList" class="approval-list empty-state">No pending approvals.</div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Recent Audit Log</h2>
+          <p class="muted">Newest first, including blocked actions and dry-run simulations.</p>
+        </div>
+        <div id="logList" class="log-list empty-state">No log entries yet.</div>
+      </section>
+    </main>
+
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

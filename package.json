@@ -1,0 +1,40 @@
+{
+  "name": "go-to-work",
+  "version": "0.1.0",
+  "description": "Windows-first local automation for AI agents with explicit approvals, browser-first control, and MCP compatibility.",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "serve": "node dist/server.js",
+    "mcp": "node dist/mcp-cli.js",
+    "dev:server": "tsx src/server.ts",
+    "dev:mcp": "tsx src/mcp-cli.ts",
+    "test": "vitest run",
+    "install:browser": "playwright install chromium"
+  },
+  "keywords": [
+    "automation",
+    "mcp",
+    "playwright",
+    "windows",
+    "ai-agent"
+  ],
+  "author": "Third-party local build",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "nanoid": "^5.1.7",
+    "playwright": "^1.59.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.3"
+  }
+}

@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Runtime data (generated at runtime, contains secrets and logs)
+runtime/logs/*.jsonl
+runtime/screenshots/*.png
+runtime/state/*.json
+runtime/state/*.txt
+runtime/temp/*
+
+# Personal policy files (contain your allowlists — don't share)
+config/default-policy.json
+config/local-policy.json
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

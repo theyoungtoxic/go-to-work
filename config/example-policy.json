@@ -1,0 +1,82 @@
+{
+  "general": {
+    "productName": "GO TO WORK",
+    "host": "127.0.0.1",
+    "port": 31337,
+    "dryRunDefault": false
+  },
+  "session": {
+    "approvalTimeoutSeconds": 300,
+    "singleActionLeaseSeconds": 120,
+    "defaultTimedSessionMinutes": 10,
+    "maxTimedSessionMinutes": 60
+  },
+  "workspaces": {
+    "approvedRoots": []
+  },
+  "browser": {
+    "allowedDomains": [
+      "github.com",
+      "*.github.com",
+      "localhost",
+      "127.0.0.1"
+    ],
+    "blockedSchemes": [
+      "file:",
+      "chrome:",
+      "edge:",
+      "devtools:",
+      "about:"
+    ],
+    "headless": false,
+    "sensitivePathKeywords": [
+      "login",
+      "signin",
+      "settings",
+      "billing",
+      "security",
+      "token",
+      "keys",
+      "delete",
+      "remove"
+    ],
+    "sensitiveSelectorKeywords": [
+      "password",
+      "secret",
+      "token",
+      "delete",
+      "remove",
+      "merge",
+      "publish",
+      "submit",
+      "billing",
+      "security"
+    ]
+  },
+  "desktop": {
+    "enabled": true,
+    "allowlistedProcessNames": [
+      "chrome.exe",
+      "msedge.exe",
+      "Code.exe",
+      "WindowsTerminal.exe",
+      "explorer.exe"
+    ],
+    "allowlistedWindowTitleKeywords": [
+      "Visual Studio Code",
+      "Microsoft Edge",
+      "Google Chrome",
+      "Terminal",
+      "Explorer"
+    ],
+    "maxScrollTicks": 8,
+    "maxMouseTravelPixels": 4000
+  },
+  "approvals": {
+    "strongerApprovalForSensitive": true,
+    "captureBeforeAfterScreenshots": true
+  },
+  "logging": {
+    "maxRecentEntries": 200
+  }
+}
