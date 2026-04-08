@@ -32,6 +32,8 @@ const policySchema = z.object({
     enabled: z.boolean(),
     allowlistedProcessNames: z.array(z.string().min(1)),
     allowlistedWindowTitleKeywords: z.array(z.string().min(1)),
+    neverAutoApproveProcesses: z.array(z.string()).default([]),
+    neverAutoApproveTitleKeywords: z.array(z.string()).default([]),
     maxScrollTicks: z.number().int().positive(),
     maxMouseTravelPixels: z.number().int().positive()
   }),
@@ -125,6 +127,37 @@ export function isWindowAllowed(policy: PolicyConfig, windowInfo: WindowInfo): b
     windowInfo.title.toLowerCase().includes(keyword.toLowerCase())
   );
   return processAllowed || titleAllowed;
+}
+
+export function shouldBlockAutoApprove(policy: PolicyConfig, action: ActionDescriptor): boolean {
+  // Critical actions are never auto-approved
+  if (action.sensitivity === "critical") {
+    return true;
+  }
+
+  // Sensitive actions are blocked from auto-approve when the policy says so
+  if (action.sensitivity === "sensitive" && policy.approvals.strongerApprovalForSensitive) {
+    return true;
+  }
+
+  // Check if the active window is in the never-auto-approve list
+  if (action.scope === "desktop" && action.metadata.activeWindow) {
+    const win = action.metadata.activeWindow as WindowInfo;
+    const processBlocked = policy.desktop.neverAutoApproveProcesses.some(
+      (proc) => proc.toLowerCase() === win.processName.toLowerCase()
+    );
+    if (processBlocked) {
+      return true;
+    }
+    const titleBlocked = policy.desktop.neverAutoApproveTitleKeywords.some(
+      (keyword) => win.title.toLowerCase().includes(keyword.toLowerCase())
+    );
+    if (titleBlocked) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function summarizeAction(action: ActionDescriptor): string {

@@ -14,7 +14,8 @@ import {
   classifyDesktopSensitivity,
   isBrowserUrlAllowed,
   isWindowAllowed,
-  loadPolicy
+  loadPolicy,
+  shouldBlockAutoApprove
 } from "./policy.js";
 import { SessionManager } from "./session.js";
 import type {
@@ -143,6 +144,14 @@ export class GoToWorkService {
 
   private flushPendingApprovals(): void {
     for (const pending of this.approvals.listPending()) {
+      if (shouldBlockAutoApprove(this.policy, pending.action)) {
+        this.logger.log(this.createLogEntry(
+          "pending_approval",
+          pending.action,
+          `Auto-approve overridden (${pending.action.sensitivity}): ${pending.action.summary} — manual approval required.`
+        ));
+        continue;
+      }
       try {
         this.approvals.decide(pending.id, {
           state: "approved",
@@ -456,7 +465,8 @@ export class GoToWorkService {
     let temporaryLease: ControlLease | null = null;
     const alreadyAllowed = this.sessions.canRun(action);
     if (!alreadyAllowed) {
-      if (this.autoApproveMinutes > 0) {
+      const blocked = shouldBlockAutoApprove(this.policy, action);
+      if (this.autoApproveMinutes > 0 && !blocked) {
         this.logger.log(this.createLogEntry("approved", action, `Auto-approved: ${action.summary}`));
         temporaryLease = this.sessions.grantTimedLease(
           action.scope,
@@ -465,6 +475,13 @@ export class GoToWorkService {
           `Auto-approved ${action.scope} session`
         );
       } else {
+        if (blocked && this.autoApproveMinutes > 0) {
+          this.logger.log(this.createLogEntry(
+            "pending_approval",
+            action,
+            `Auto-approve overridden (${action.sensitivity}): ${action.summary} — manual approval required.`
+          ));
+        }
         this.logger.log(this.createLogEntry("pending_approval", action, `Waiting for user approval: ${action.summary}`));
         const decision = await this.approvals.requestApproval(
           action,

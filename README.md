@@ -40,6 +40,16 @@ You also get:
 - **Audit logging** of every action with before/after screenshots
 - **A visible control indicator** on screen whenever a session is active
 
+### Auto-Approve Safety Overrides
+
+Even when you turn on auto-approve, certain actions **always require manual approval**:
+
+- **Critical actions** — anything involving password fields, security tokens, or destructive buttons (delete, remove, publish, merge) will never be auto-approved
+- **Sensitive browser pages** — login pages, billing, security settings, and token/key management pages are always flagged
+- **System-critical desktop apps** — Task Manager, Registry Editor, PowerShell, Command Prompt, User Account Control, Windows Security, Device Manager, and other system tools always require your explicit approval — even during auto-approve sessions
+
+These overrides are built into the engine and cannot be bypassed by the AI agent. You can customize the list of never-auto-approve processes and title keywords in your policy file under `neverAutoApproveProcesses` and `neverAutoApproveTitleKeywords`.
+
 ---
 
 ## Requirements
@@ -279,6 +289,15 @@ Want the agent to control a new app (like Godot, Photoshop, etc.)?
 2. Add it to `allowlistedProcessNames` in your `config/default-policy.json`
 3. Add a window title keyword too (e.g. `"Godot"`)
 4. Rebuild and restart: `npm run build && npm run serve`
+
+### Actions that are never auto-approved
+
+Even with auto-approve on, these always require manual approval:
+- Clicking delete/remove/publish/merge buttons in the browser
+- Visiting login, billing, or security pages
+- Interacting with Task Manager, Registry Editor, PowerShell, CMD, or any system admin tool
+
+You can customize this list in your policy under `neverAutoApproveProcesses` and `neverAutoApproveTitleKeywords`.
 
 ### Emergency stop
 

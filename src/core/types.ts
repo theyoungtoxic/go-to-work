@@ -38,6 +38,8 @@ export interface PolicyConfig {
     enabled: boolean;
     allowlistedProcessNames: string[];
     allowlistedWindowTitleKeywords: string[];
+    neverAutoApproveProcesses: string[];
+    neverAutoApproveTitleKeywords: string[];
     maxScrollTicks: number;
     maxMouseTravelPixels: number;
   };

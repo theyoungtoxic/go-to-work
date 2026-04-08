@@ -69,6 +69,30 @@
       "Terminal",
       "Explorer"
     ],
+    "neverAutoApproveProcesses": [
+      "taskmgr.exe",
+      "regedit.exe",
+      "mmc.exe",
+      "cmd.exe",
+      "powershell.exe",
+      "pwsh.exe",
+      "control.exe",
+      "msiexec.exe",
+      "netplwiz.exe",
+      "SystemSettings.exe"
+    ],
+    "neverAutoApproveTitleKeywords": [
+      "Task Manager",
+      "Registry Editor",
+      "User Account Control",
+      "Administrator",
+      "System Properties",
+      "Windows Security",
+      "Credential Manager",
+      "Device Manager",
+      "Disk Management",
+      "Services"
+    ],
     "maxScrollTicks": 8,
     "maxMouseTravelPixels": 4000
   },
